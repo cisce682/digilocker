@@ -34,26 +34,19 @@
         // Get the enrollment number from URL query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const enrollNumber = urlParams.get('enroll');
-        
+        const cls = urlParams.get('class');
         // Display the enrollment number
-        if (enrollNumber) {
+        if (enrollNumber && cls) {
             document.title = `DigiLocker Verification - ${enrollNumber}`;
-            
-            // Create the PDF file path
-            const pdfPath = `result/${enrollNumber}.pdf`;
-            
-            // Directly embed the PDF
-            const contentDiv = document.getElementById('content');
-            contentDiv.innerHTML = `
+
+            const pdfPath = `result/${cls}/${enrollNumber}.pdf`;
+
+            document.getElementById('content').innerHTML = `
                 <embed src="${pdfPath}" type="application/pdf" class="pdf-container" onerror="handlePdfError()">
             `;
         } else {
-            // No enrollment number provided
-            const contentDiv = document.getElementById('content');
-            contentDiv.innerHTML = `
-                <div class="error-message">
-                    NO RECORD FOUND
-                </div>
+            document.getElementById('content').innerHTML = `
+                <div class="error-message">NO RECORD FOUND</div>
             `;
         }
         
